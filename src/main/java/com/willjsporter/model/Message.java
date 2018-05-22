@@ -6,6 +6,11 @@ import java.util.Date;
 @XmlRootElement
 public class Message {
 
+    private long id;
+    private String message;
+    private Date created;
+    private String author;
+
     public Message() {
 
     }
@@ -49,8 +54,4 @@ public class Message {
         this.author = author;
     }
 
-    private long id;
-    private String message;
-    private Date created;
-    private String author;
 }

@@ -1,18 +1,46 @@
 package com.willjsporter.service;
 
+import com.willjsporter.mocks.DatabaseClass;
 import com.willjsporter.model.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MessageService {
 
+    private Map<Long, Message> messages = DatabaseClass.getMessages();
+
+
+    public MessageService() {
+        messages.put(1L, new Message(1, "Hello World", "Will"));
+        messages.put(2L, new Message(2, "Hello Koushik", "Koushik"));
+    }
+
     public List<Message> getAllMessages() {
-        Message message1 = new Message(1, "Hello World", "Will");
-        Message message2 = new Message(2, "Hello Koushik", "Will");
-        List<Message> messages = new ArrayList<>();
-        messages.add(message1);
-        messages.add(message2);
-        return messages;
+        return new ArrayList<Message>(messages.values());
+    }
+
+    public Message getMessage(long id) {
+        return messages.get(id);
+    }
+
+    public Message addMessage(Message message) {
+        message.setId(messages.size() + 1);
+        messages.put(message.getId(), message);
+        return message;
+    }
+
+    public Message updateMessage(Message message) {
+        if (message.getId() <= 0) {
+            return null;
+        }
+
+        messages.put(message.getId(), message);
+        return message;
+    }
+
+    public Message removeMessage(Long id) {
+        return messages.remove(id);
     }
 }
