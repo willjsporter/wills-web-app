@@ -27,4 +27,18 @@ public class MessageResource {
     public Message getMessage(@PathParam("messageId") long messageId) {
         return messageService.getMessage(messageId);
     }
+
+    @PUT
+    @Path("/{messageId}")
+    public Message updateMessage(@PathParam("messageId") long messageId, Message message) {
+        message.setId(messageId);
+        return messageService.updateMessage(message);
+    }
+
+    @DELETE
+    @Path("/{messageId}")
+    public Message deleteMessage(@PathParam("messageId") long messageId) {
+        return messageService.removeMessage(messageId);
+    }
+
 }
