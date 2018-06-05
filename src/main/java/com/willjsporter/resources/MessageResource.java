@@ -3,32 +3,28 @@ package com.willjsporter.resources;
 import com.willjsporter.model.Message;
 import com.willjsporter.service.MessageService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/messages")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class MessageResource {
 
     private MessageService messageService = new MessageService();
 
+    @GET
+    public List<Message> getMessages() { return messageService.getAllMessages(); }
 
-//    public static void main(String... args) {
-//        MessageService test = new MessageService();
-//        Message message1 = new Message(1, "Hello World", "Will");
-//        Message message2 = new Message(2, "Hello Koushik", "Will");
-//        System.out.println(test.addMessage(message1));
-//        System.out.println(test.addMessage(message2));
-//        System.out.println(test.getAllMessages());
-//        System.out.println(test.removeMessage(1L));
-//        System.out.println(test.getMessage(2).getMessage());
-//        System.out.println(test.getMessage(1));
-//        System.out.println(test.getAllMessages());
-//    }
+    @POST
+    public Message addMessage(Message message) {
+        return messageService.addMessage(message);
+    }
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public List<Message> getMessages() { return messageService.getAllMessages(); }
+    @Path("/{messageId}")
+    public Message getMessage(@PathParam("messageId") long messageId) {
+        return messageService.getMessage(messageId);
+    }
 }
